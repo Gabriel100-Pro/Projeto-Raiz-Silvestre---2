@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Raiz Silvestre — Jardinagem</title>
+  <meta name="description" content="Jardinagem com qualidade, cuidado e experiência: plantio, paisagismo, irrigação, manutenção de gramados e poda.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sprite de ícones -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-grass" viewBox="0 0 24 24"><path d="M2.5 20.5h19"/><path d="M5 20.5c0-3.6-.9-6.4-2.6-8.6"/><path d="M8.2 20.5c0-4.6 1-8.2 3-11"/><path d="M12 20.5V5"/><path d="M15.8 20.5c0-4.6-1-8.2-3-11"/><path d="M19 20.5c0-3.6.9-6.4 2.6-8.6"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12C12 8 9.2 5.6 4.6 5.6c0 4 2.8 6.4 7.4 6.4z"/><path d="M12 10c0-3.6 2.6-5.8 6.8-5.8 0 3.6-2.6 5.8-6.8 5.8z"/><path d="M7.5 21h9"/></symbol>
+    <symbol id="i-seedling" viewBox="0 0 24 24"><path d="M12 20.5V13"/><path d="M12 13c-3.6 0-6-2.2-6-6 3.6 0 6 2.2 6 6z"/><path d="M12 15c0-3.2 2.2-5.4 5.6-5.4 0 3.2-2.2 5.4-5.6 5.4z"/><path d="M6.5 20.5c1.6-1.2 3.5-1.8 5.5-1.8s3.9.6 5.5 1.8"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2.8c3.7 4.6 6.2 8 6.2 11.4a6.2 6.2 0 0 1-12.4 0c0-3.4 2.5-6.8 6.2-11.4z"/><path d="M9.3 14.6a2.7 2.7 0 0 0 2.7 2.7"/></symbol>
+    <symbol id="i-prune" viewBox="0 0 24 24"><path d="M12 21.5V11"/><circle cx="12" cy="6.6" r="2.4"/><path d="M12 11c-2.4 0-4.8-1.1-5.8-3.7 2.6-.5 4.8.6 5.8 3.7z"/><path d="M12 11c2.4 0 4.8-1.1 5.8-3.7-2.6-.5-4.8.6-5.8 3.7z"/><path d="M12 16.4c-2 0-4.2-.9-5.2-3.2 2.3-.4 4.2.5 5.2 3.2z"/><path d="M12 16.4c2 0 4.2-.9 5.2-3.2-2.3-.4-4.2.5-5.2 3.2z"/></symbol>
+    <symbol id="i-pot" viewBox="0 0 24 24"><path d="M6.8 14h10.4l-1.4 7H8.2z"/><path d="M12 14V8.4"/><path d="M12 9.4C12 6.2 9.8 4 6.2 4c0 3.2 2.2 5.4 5.8 5.4z"/><path d="M12 11.4c0-2.6 2-4.4 5.2-4.4 0 2.6-2 4.4-5.2 4.4z"/></symbol>
+    <symbol id="i-plan" viewBox="0 0 24 24"><rect x="4" y="2.8" width="16" height="18.4" rx="2.2"/><path d="M8 7.5h8"/><path d="M8 11h4.5"/><path d="M8 15h2"/><path d="M12.2 17.4c0-2.3 1.4-3.9 3.4-3.9 0 2.3-1.4 3.9-3.4 3.9z"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 21.5v-6"/><path d="M12 15.5c-4.2 0-7-2.4-7-5.8 0-2.5 1.7-4.4 3.9-5C9.6 3.2 10.7 2.5 12 2.5s2.4.7 3.1 2.2c2.2.6 3.9 2.5 3.9 5 0 3.4-2.8 5.8-7 5.8z"/><path d="M12 13.5l-2.4-2.2"/><path d="M12 11.6l2.2-2"/><path d="M8 21.5h8"/></symbol>
+    <symbol id="i-can" viewBox="0 0 24 24"><path d="M5 9.5h9.5v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M14.5 12l5.5-4.5"/><path d="M19.2 5.6l1.8 2.2"/><path d="M5 12.5c-1.7 0-2.5-1-2.5-2.3S3.6 7.5 5.6 7.5h6.2"/></symbol>
+    <symbol id="i-wall" viewBox="0 0 24 24"><rect x="3.5" y="3" width="17" height="18" rx="2"/><path d="M3.5 9h17"/><path d="M3.5 15h17"/><path d="M7.5 7.2c0-1.4.8-2.3 2-2.3 0 1.4-.8 2.3-2 2.3z"/><path d="M14 13.2c0-1.4.8-2.3 2-2.3 0 1.4-.8 2.3-2 2.3z"/><path d="M9 19.2c0-1.4.8-2.3 2-2.3 0 1.4-.8 2.3-2 2.3z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7.5h12l1.2 12.2a1.6 1.6 0 0 1-1.6 1.8H6.4a1.6 1.6 0 0 1-1.6-1.8z"/><path d="M8 7.5l1-3.5h6l1 3.5"/><path d="M12 18.5v-4"/><path d="M12 14.5c0-2-1.4-3.2-3.4-3.2 0 2 1.4 3.2 3.4 3.2z"/><path d="M12 15.6c0-1.7 1.2-2.8 3-2.8 0 1.7-1.2 2.8-3 2.8z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 6.5l8.2 6.2 8.2-6.2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s-7-6.1-7-11.6a7 7 0 0 1 14 0c0 5.5-7 11.6-7 11.6z"/><circle cx="12" cy="9.8" r="2.6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M14 21v-7.5h2.6l.4-3H14V8.7c0-.9.3-1.5 1.6-1.5H17V4.5c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.2H8.3v3H11V21"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3.6 20.4l1.2-4.1a8.6 8.6 0 1 1 3.2 3.1z"/><path d="M9.1 8.1c.2-.4.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.6l-.5.6c-.1.1-.1.3 0 .5.6 1.1 1.5 2 2.6 2.6.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.2.1.4.3.4.5v.5c0 .3-.2.6-.5.8-.6.4-1.4.6-2.1.4-2.8-.7-5-2.9-5.8-5.7-.2-.7 0-1.5.4-2.1z"/></symbol>
+  </svg>
+
+  <div class="page">
+    <!-- ===================== HEADER ===================== -->
+    <header class="header">
+      <div class="container header__inner">
+        <a class="logo" href="#inicio" aria-label="Raiz Silvestre — início">
+          <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M29 3C14.5 3 4.6 11.6 4.6 24.4c0 1.3.1 2.4.3 3.4C8 17.7 15.4 11.6 24.6 8.6 15.8 13.6 10.2 20.6 7.9 29.7c12.3.9 21.8-7 21.8-20.3 0-2.2-.2-4.3-.7-6.4z"/>
+          </svg>
+          <span class="logo__text">
+            <span class="logo__name">Raiz<span>Silvestre</span></span>
+            <span class="logo__tag">Jardinagem</span>
+          </span>
+        </a>
+
+        <nav class="nav" id="menu" aria-label="Navegação principal">
+          <a class="nav__link is-active" href="#inicio" aria-current="page">Início</a>
+          <a class="nav__link" href="#servicos">Serviços</a>
+          <a class="nav__link" href="#sobre">Sobre</a>
+          <a class="nav__link" href="#galeria">Galeria</a>
+          <a class="nav__link" href="#contato">Contato</a>
+        </nav>
+
+        <!-- TODO: substituir pelo número real do WhatsApp -->
+        <a class="btn-quote" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+          <span>Solicitar Orçamento</span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===================== HERO ===================== -->
+      <section class="hero" id="inicio">
+        <div class="hero__plants" aria-hidden="true">
+          <img class="plant plant--left" src="assets/img/fundo-folhas-esquerda.jpg" alt="">
+          <img class="plant plant--right" src="assets/img/fundo-folhas-direita.jpg" alt="">
+        </div>
+        <div class="container hero__content">
+          <p class="eyebrow reveal">Transforme seu espaço</p>
+          <h1 class="display reveal" style="--d: 80ms">
+            <span class="display__line">Com a natureza</span>
+            <span class="display__line display__line--accent">ao seu lado.</span>
+          </h1>
+          <p class="hero__lead reveal" style="--d: 160ms">
+            Jardinagem com qualidade, cuidado e experiência para
+            deixar seu ambiente mais bonito, saudável e acolhedor.
+          </p>
+          <div class="hero__actions reveal" style="--d: 240ms">
+            <!-- TODO: substituir pelo número real do WhatsApp -->
+            <a class="btn-primary" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20contratar%20um%20servi%C3%A7o%20de%20jardinagem." target="_blank" rel="noopener">Contratar agora</a>
+            <a class="link-underline" href="#planos">Ver planos</a>
+          </div>
+        </div>
+
+        <div class="arc" data-arc tabindex="0" aria-roledescription="carrossel" aria-label="Serviços em destaque — arraste ou use as setas para navegar">
+          <ul class="arc__track">
+            <li class="arc-card" data-arc-card>
+              <div class="arc-card__shadow" aria-hidden="true"></div>
+              <div class="arc-card__float"><div class="arc-card__inner">
+                <img src="assets/img/hero-plantio.jpg" alt="Mãos plantando mudas na terra" draggable="false">
+                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-sprout"/></svg><span>Plantio<br>e paisagismo</span></div>
+              </div></div>
+            </li>
+            <li class="arc-card" data-arc-card>
+              <div class="arc-card__shadow" aria-hidden="true"></div>
+              <div class="arc-card__float"><div class="arc-card__inner">
+                <img src="assets/img/hero-instalacao.jpg" alt="Caminho de jardim iluminado à noite" draggable="false">
+                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-seedling"/></svg><span>Instalação<br>de jardins</span></div>
+              </div></div>
+            </li>
+            <li class="arc-card" data-arc-card>
+              <div class="arc-card__shadow" aria-hidden="true"></div>
+              <div class="arc-card__float"><div class="arc-card__inner">
+                <img src="assets/img/hero-irrigacao.jpg" alt="Aspersor irrigando o gramado" draggable="false">
+                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg><span>Sistema de<br>irrigação</span></div>
+              </div></div>
+            </li>
+            <li class="arc-card" data-arc-card data-arc-start>
+              <div class="arc-card__shadow" aria-hidden="true"></div>
+              <div class="arc-card__float"><div class="arc-card__inner">
+                <img src="assets/img/hero-gramados.jpg" alt="Cortador de grama sobre um gramado verde" draggable="false">
+                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-grass"/></svg><span>Manutenção<br>de gramados</span></div>
+              </div></div>
+            </li>
+            <li class="arc-card" data-arc-card>
+              <div class="arc-card__shadow" aria-hidden="true"></div>
+              <div class="arc-card__float"><div class="arc-card__inner">
+                <img src="assets/img/hero-poda.jpg" alt="Poda de arbusto com tesoura de cerca viva" draggable="false">
+                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-prune"/></svg><span>Poda e<br>paisagismo</span></div>
+              </div></div>
+            </li>
+            <li class="arc-card" data-arc-card>
+              <div class="arc-card__shadow" aria-hidden="true"></div>
+              <div class="arc-card__float"><div class="arc-card__inner">
+                <img src="assets/img/hero-plantas.jpg" alt="Ave-do-paraíso florida entre folhagens" draggable="false">
+                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-pot"/></svg><span>Plantas e<br>decoração verde</span></div>
+              </div></div>
+            </li>
+            <li class="arc-card" data-arc-card>
+              <div class="arc-card__shadow" aria-hidden="true"></div>
+              <div class="arc-card__float"><div class="arc-card__inner">
+                <img src="assets/img/hero-personalizados.jpg" alt="Jardim residencial moderno com gramado e canteiros" draggable="false">
+                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-plan"/></svg><span>Jardins<br>personalizados</span></div>
+              </div></div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Seções sobre o fundo de grama -->
+      <div class="green-zone">
+        <!-- Vídeo de fundo: plantas balançando ao vento -->
+        <div class="green-zone__media" aria-hidden="true">
+          <video class="green-zone__video" data-bg-video autoplay muted loop playsinline preload="auto">
+            <source src="assets/video/plantas-balancando.mp4" type="video/mp4">
+          </video>
+        </div>
+      <!-- ===================== NÚMEROS ===================== -->
+      <!-- TODO: confirmar os números reais da empresa -->
+      <section class="stats" aria-label="Raiz Silvestre em números">
+        <div class="container">
+          <ul class="stats__grid">
+            <li class="stat reveal" style="--d: 0ms">
+              <p class="stat__value"><span data-count="850" data-prefix="+">0</span></p>
+              <p class="stat__label">Jardins criados</p>
+            </li>
+            <li class="stat stat--alt reveal" style="--d: 120ms">
+              <p class="stat__value"><span data-count="15">0</span></p>
+              <p class="stat__label">Anos de experiência</p>
+            </li>
+            <li class="stat reveal" style="--d: 240ms">
+              <p class="stat__value"><span data-count="98" data-suffix="%">0</span></p>
+              <p class="stat__label">Clientes satisfeitos</p>
+            </li>
+            <li class="stat stat--alt reveal" style="--d: 360ms">
+              <p class="stat__value"><span data-count="1200" data-prefix="+">0</span></p>
+              <p class="stat__label">Manutenções realizadas</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== NOSSOS SERVIÇOS ===================== -->
+      <section class="services" id="servicos">
+        <div class="container">
+          <header class="services__head">
+            <div>
+              <p class="eyebrow reveal">Nossos serviços</p>
+              <h2 class="display display--sm reveal" style="--d: 80ms">
+                <span class="display__line">Soluções completas</span>
+                <span class="display__line display__line--accent">para o seu jardim.</span>
+              </h2>
+            </div>
+            <p class="services__intro reveal" style="--d: 160ms">
+              Do cuidado diário ao projeto completo, oferecemos serviços
+              especializados para cada necessidade.
+            </p>
+          </header>
+
+          <div class="slider reveal" data-slider style="--d: 200ms" aria-roledescription="carrossel" aria-label="Lista de serviços">
+            <div class="slider__viewport">
+              <ol class="slider__track" data-slider-track>
+                <li class="service"><span class="service__number" aria-hidden="true">1</span>
+                  <div class="service__card"><img src="assets/img/servico-gramados.jpg" alt="Gramado verde e bem aparado" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-grass"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Manutenção de gramados</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">2</span>
+                  <div class="service__card"><img src="assets/img/servico-plantio.jpg" alt="Caminho de jardim entre canteiros floridos" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-sprout"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Plantio e paisagismo</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">3</span>
+                  <div class="service__card"><img src="assets/img/servico-irrigacao.jpg" alt="Aspersores irrigando um gramado ao entardecer" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-drop"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Sistema de irrigação</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">4</span>
+                  <div class="service__card"><img src="assets/img/servico-poda.jpg" alt="Jardineiro podando cerca viva" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-prune"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Poda e paisagismo</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">5</span>
+                  <div class="service__card"><img src="assets/img/servico-instalacao.jpg" alt="Jardim instalado com lago e canteiros" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-seedling"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Instalação de jardins</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">6</span>
+                  <div class="service__card"><img src="assets/img/servico-plantas.jpg" alt="Ave-do-paraíso entre folhagens" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-pot"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Plantas e decoração verde</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">7</span>
+                  <div class="service__card"><img src="assets/img/servico-personalizados.jpg" alt="Túnel verde de trepadeiras sobre um caminho" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-plan"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Jardins personalizados</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">8</span>
+                  <div class="service__card"><img src="assets/img/servico-adubacao.jpg" alt="Mãos com luvas cuidando do solo de um canteiro" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-bag"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Adubação e fertilização</p></li>
+                <li class="service"><span class="service__number" aria-hidden="true">9</span>
+                  <div class="service__card"><img src="assets/img/servico-rega.jpg" alt="Regador molhando plantas jovens" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-can"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Rega e cuidados diários</p></li>
+                <li class="service service--wide"><span class="service__number" aria-hidden="true">10</span>
+                  <div class="service__card"><img src="assets/img/servico-verticais.jpg" alt="Jardim vertical com plantas suculentas" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-wall"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Jardins verticais</p></li>
+                <li class="service service--wide"><span class="service__number" aria-hidden="true">11</span>
+                  <div class="service__card"><img src="assets/img/servico-arborizacao.jpg" alt="Árvore frondosa em um campo verde" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-tree"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Plantio de árvores</p></li>
+                <li class="service service--wide"><span class="service__number" aria-hidden="true">12</span>
+                  <div class="service__card"><img src="assets/img/servico-projetos.jpg" alt="Projeto paisagístico desenhado em papel" loading="lazy">
+                    <span class="service__badge" aria-hidden="true"><svg class="icon"><use href="#i-plan"/></svg></span><span class="service__bar" aria-hidden="true"></span></div>
+                  <p class="service__label">Projetos paisagísticos</p></li>
+              </ol>
+            </div>
+
+            <div class="slider__controls">
+              <p class="slider__count"><span data-slider-current>01</span> / <span data-slider-total>12</span></p>
+              <div class="slider__progress" aria-hidden="true"><span data-slider-bar></span></div>
+              <button class="slider__btn slider__btn--prev" type="button" data-slider-prev aria-label="Serviço anterior"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="slider__btn" type="button" data-slider-next aria-label="Próximo serviço"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== CHAMADA (texto que acende com a rolagem) ===================== -->
+      <section class="manifesto" id="chamada" data-manifesto aria-label="Agende seu serviço">
+        <div class="manifesto__sticky">
+          <div class="container manifesto__inner">
+            <p class="eyebrow manifesto__eyebrow">O próximo passo · Seu jardim</p>
+            <p class="manifesto__text">
+              <span class="manifesto__line" data-words>Todo jardim pode</span>
+              <span class="manifesto__line" data-words>ficar bonito. O seu</span>
+              <span class="manifesto__line" data-words>merece florescer</span>
+              <span class="manifesto__line manifesto__line--accent"><span data-words>o ano inteiro.</span>
+                <!-- TODO: substituir pelo número real do WhatsApp -->
+                <a class="manifesto__cta word" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20agendar%20um%20servi%C3%A7o%20de%20jardinagem." target="_blank" rel="noopener">Agende<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></span>
+            </p>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      <!-- ===================== PLANOS ===================== -->
+      <!-- TODO: confirmar valores, itens dos planos e o número real do WhatsApp -->
+      <section class="plans" id="planos" data-plans>
+        <!-- Fundo: floresta com sol entre as folhas, revelada por uma luz que segue o cursor -->
+        <div class="plans__media" aria-hidden="true">
+          <video class="plans__video" data-bg-video autoplay muted loop playsinline preload="metadata">
+            <source src="assets/video/floresta-luz.mp4" type="video/mp4">
+          </video>
+          <div class="plans__shade"></div>
+        </div>
+
+        <div class="container plans__inner">
+          <header class="plans__head">
+            <p class="eyebrow reveal">Planos mensais</p>
+            <h2 class="display display--sm reveal" style="--d: 80ms">
+              <span class="display__line">Escolha o cuidado</span>
+              <span class="display__line display__line--accent">que seu jardim merece.</span>
+            </h2>
+            <p class="plans__intro reveal" style="--d: 160ms">
+              Visitas programadas, equipe fixa e sem taxa de adesão.
+              Troque de plano ou cancele quando quiser.
+            </p>
+          </header>
+
+          <ul class="plans__grid">
+            <li class="plan reveal" style="--d: 0ms">
+              <p class="plan__name">Essencial</p>
+              <p class="plan__desc">Para manter o jardim sempre limpo e bem aparado.</p>
+              <p class="plan__price">
+                <span class="plan__currency">R$</span><span class="plan__value" data-count="189" data-delay="0">0</span><span class="plan__period">/mês</span>
+              </p>
+              <ul class="plan__list">
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>2 visitas por mês</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Corte e manutenção do gramado</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Limpeza de canteiros</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Relatório com fotos de cada visita</li>
+              </ul>
+              <a class="plan__cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20no%20plano%20Essencial." target="_blank" rel="noopener">Contratar plano</a>
+            </li>
+
+            <li class="plan plan--featured reveal" style="--d: 120ms">
+              <span class="plan__tag">Mais escolhido</span>
+              <p class="plan__name">Jardim Vivo</p>
+              <p class="plan__desc">O cuidado completo para o jardim crescer saudável o ano todo.</p>
+              <p class="plan__price">
+                <span class="plan__currency">R$</span><span class="plan__value" data-count="349" data-delay="150">0</span><span class="plan__period">/mês</span>
+              </p>
+              <ul class="plan__list">
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>4 visitas por mês</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Tudo do plano Essencial</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Poda e adubação sazonal</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Controle de pragas</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Revisão do sistema de irrigação</li>
+              </ul>
+              <a class="plan__cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20no%20plano%20Jardim%20Vivo." target="_blank" rel="noopener">Contratar plano</a>
+            </li>
+
+            <li class="plan reveal" style="--d: 240ms">
+              <p class="plan__name">Completo</p>
+              <p class="plan__desc">Para quem quer um jardim de revista, sem se preocupar com nada.</p>
+              <p class="plan__price">
+                <span class="plan__currency">R$</span><span class="plan__value" data-count="590" data-delay="300">0</span><span class="plan__period">/mês</span>
+              </p>
+              <ul class="plan__list">
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Visitas semanais</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Tudo do plano Jardim Vivo</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Reposição de plantas inclusa</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Projeto paisagístico anual</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Atendimento prioritário</li>
+              </ul>
+              <a class="plan__cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20no%20plano%20Completo." target="_blank" rel="noopener">Contratar plano</a>
+            </li>
+          </ul>
+
+          <p class="plans__note">Valores de referência para jardins de até 200 m². Áreas maiores sob orçamento.</p>
+        </div>
+      </section>
+
+      <!-- ===================== CINEMA NO JARDIM (aproximação com a rolagem) ===================== -->
+      <section class="cinema" id="fechar" data-cinema aria-label="Feche com a Raiz Silvestre">
+        <div class="cinema__stage">
+          <img class="cinema__scene" src="assets/img/cinema-jardim.jpg" alt="Cinema ao ar livre em um jardim à noite, com varal de luzes e duas pessoas assistindo" data-cinema-scene>
+          <div class="cinema__screen" data-cinema-screen>
+            <div class="cinema__content">
+              <h2 class="cinema__title">Pronto para dar o play<br><span>no seu novo jardim?</span></h2>
+            </div>
+          </div>
+          <div class="cinema__vignette" aria-hidden="true"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== RODAPÉ ===================== -->
+    <!-- TODO: confirmar telefone, e-mail, endereço, horários e redes sociais reais -->
+    <footer class="footer" id="contato">
+      <div class="container">
+        <div class="footer__top">
+          <div class="footer__brand">
+            <a class="logo footer__logo" href="#inicio" aria-label="Raiz Silvestre — voltar ao início">
+              <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M29 3C14.5 3 4.6 11.6 4.6 24.4c0 1.3.1 2.4.3 3.4C8 17.7 15.4 11.6 24.6 8.6 15.8 13.6 10.2 20.6 7.9 29.7c12.3.9 21.8-7 21.8-20.3 0-2.2-.2-4.3-.7-6.4z"/>
+              </svg>
+              <span class="logo__text">
+                <span class="logo__name">Raiz<span>Silvestre</span></span>
+                <span class="logo__tag">Jardinagem</span>
+              </span>
+            </a>
+            <p class="footer__about">
+              Jardinagem com qualidade, cuidado e experiência para deixar
+              seu ambiente mais bonito, saudável e acolhedor.
+            </p>
+            <a class="btn-primary footer__cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+              Solicitar orçamento
+            </a>
+          </div>
+
+          <nav class="footer__col" aria-label="Navegação do rodapé">
+            <p class="footer__title">Navegação</p>
+            <ul>
+              <li><a href="#inicio">Início</a></li>
+              <li><a href="#servicos">Serviços</a></li>
+              <li><a href="#planos">Planos</a></li>
+              <li><a href="#fechar">Fale com a gente</a></li>
+            </ul>
+          </nav>
+
+          <div class="footer__col">
+            <p class="footer__title">Serviços</p>
+            <ul>
+              <li><a href="#servicos">Manutenção de gramados</a></li>
+              <li><a href="#servicos">Plantio e paisagismo</a></li>
+              <li><a href="#servicos">Sistema de irrigação</a></li>
+              <li><a href="#servicos">Poda e paisagismo</a></li>
+              <li><a href="#servicos">Projetos paisagísticos</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__col">
+            <p class="footer__title">Contato</p>
+            <ul class="footer__contact">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg><a href="https://wa.me/5500000000000" target="_blank" rel="noopener">(00) 00000-0000</a></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:contato@raizsilvestre.com.br">contato@raizsilvestre.com.br</a></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Sua cidade · UF</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Seg. a sáb., das 7h às 18h</span></li>
+            </ul>
+            <div class="footer__social">
+              <a href="#" aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+              <a href="#" aria-label="Facebook"><svg class="icon" aria-hidden="true"><use href="#i-facebook"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assinatura grande que surge letra por letra -->
+        <p class="footer__wordmark" aria-hidden="true" data-wordmark>Raiz Silvestre</p>
+
+        <div class="footer__bottom">
+          <p>© <span data-year>2026</span> Raiz Silvestre Jardinagem. Todos os direitos reservados.</p>
+          <a class="footer__top-link" href="#inicio">Voltar ao topo <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
