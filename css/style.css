@@ -1090,7 +1090,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Cinema no jardim: a câmera se aproxima da tela com a rolagem (js/main.js) ---------- */
 .cinema {
   position: relative;
-  height: 340vh;
+  height: 190vh; /* menos altura = aproximação mais rápida ao rolar */
   background: #050a05;
 }
 .cinema__stage {
