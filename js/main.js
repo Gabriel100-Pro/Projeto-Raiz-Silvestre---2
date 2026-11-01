@@ -41,13 +41,26 @@
   const nav = document.getElementById("menu");
 
   if (toggle && nav) {
+    const navVideo = nav.querySelector("[data-nav-video]");
     const setOpen = (open) => {
       nav.classList.toggle("is-open", open);
+      document.documentElement.classList.toggle("menu-open", open);
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+      // O vídeo do painel só carrega/toca com o menu aberto
+      if (navVideo) {
+        if (open && !reduceMotion.matches) navVideo.play().catch(() => {});
+        else navVideo.pause();
+      }
     };
     toggle.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
-    nav.addEventListener("click", (e) => { if (e.target.closest("a")) setOpen(false); });
+    // Fecha ao escolher uma opção ou ao tocar fora do painel
+    nav.addEventListener("click", (e) => {
+      if (e.target.closest("a") || e.target === nav) setOpen(false);
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900 && nav.classList.contains("is-open")) setOpen(false);
+    });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
   }
 
@@ -336,6 +349,8 @@
       // O texto acende conforme a câmera se aproxima
       screen.style.setProperty("--title", (0.3 + 0.7 * smooth(0.35, 0.85, p)).toFixed(3));
       stage.style.setProperty("--vignette", (1 - m).toFixed(3));
+      // Ao chegar na tela, o título passa a brilhar
+      screen.classList.toggle("is-glowing", p >= 0.8);
     };
 
     const progress = () => {
@@ -432,10 +447,71 @@
     document.addEventListener("visibilitychange", start);
     window.addEventListener("resize", () => render(false));
 
+    /* Desktop: clicar, segurar e arrastar os cards para o lado com o mouse */
+    const viewport = slider.querySelector(".slider__viewport");
+    let dragX = null;
+    let dragFrom = 0;
+    let dragPos = 0;
+    let dragging = false;
+    let lastX = 0;
+    let lastT = 0;
+    let velocity = 0;
+
+    track.querySelectorAll("img").forEach((img) => { img.draggable = false; });
+
+    viewport.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      dragX = lastX = e.clientX;
+      lastT = performance.now();
+      // Volta para o card original equivalente caso esteja numa cópia
+      if (index >= total) index -= total;
+      dragFrom = dragPos = index;
+      dragging = false;
+      velocity = 0;
+    });
+
+    viewport.addEventListener("pointermove", (e) => {
+      if (dragX === null) return;
+      const dx = e.clientX - dragX;
+      if (!dragging && Math.abs(dx) < 5) return;
+      if (!dragging) {
+        dragging = true;
+        stop();
+        viewport.setPointerCapture(e.pointerId);
+        slider.classList.add("is-dragging");
+        track.classList.add("no-anim");
+      }
+      const now = performance.now();
+      velocity = (e.clientX - lastX) / Math.max(1, now - lastT);
+      lastX = e.clientX;
+      lastT = now;
+      // Posição contínua, dando a volta pelo início/fim sem salto visível
+      dragPos = dragFrom - dx / stepSize();
+      dragPos = ((dragPos % total) + total) % total;
+      track.style.transform = `translateX(${-dragPos * stepSize()}px)`;
+    });
+
+    const endDrag = () => {
+      if (dragX === null) return;
+      dragX = null;
+      if (!dragging) return;
+      dragging = false;
+      slider.classList.remove("is-dragging");
+      track.classList.remove("no-anim");
+      // Um gesto rápido avança mais um card na direção do movimento
+      const fling = Math.abs(velocity) > 0.4 ? -Math.sign(velocity) * 0.5 : 0;
+      index = Math.max(0, Math.round(dragPos + fling));
+      render();
+      start();
+    };
+    viewport.addEventListener("pointerup", endDrag);
+    viewport.addEventListener("pointercancel", endDrag);
+    viewport.addEventListener("lostpointercapture", endDrag);
+
     if (hasIO) {
       new IntersectionObserver(([entry]) => {
         inView = entry.isIntersecting;
-        start();
+        if (!dragging) start();
       }, { threshold: 0.15 }).observe(slider);
     } else {
       inView = true;
@@ -445,201 +521,4 @@
     render(false);
   }
 
-  /* ---------- Arco de cards da Hero ---------- */
-  const arc = document.querySelector("[data-arc]");
-  if (!arc) return;
-
-  const cards = [...arc.querySelectorAll("[data-arc-card]")];
-  const count = cards.length;
-  const half = count / 2;
-
-  /*
-   * Posição de cada card conforme a distância até o centro.
-   * Valores medidos na referência (card central = 245 × 282 px):
-   *   x     → deslocamento horizontal do centro do card (px)
-   *   rot   → rotação no eixo Y (graus), cria o efeito de superfície curva
-   *   scale → redução progressiva em direção às extremidades
-   *   lift  → leve subida da base dos cards mais distantes
-   * Distâncias fracionadas (durante o arraste) são interpoladas.
-   */
-  const SLOTS = [
-    { x: 0,   rot: 0,  scale: 1,     lift: 0,  shade: 0 },
-    { x: 232, rot: 40, scale: 0.955, lift: 0,  shade: 0.28 },
-    { x: 410, rot: 47, scale: 0.87,  lift: 2,  shade: 0.42 },
-    { x: 548, rot: 56, scale: 0.76,  lift: 8,  shade: 0.55 },
-    { x: 650, rot: 62, scale: 0.66,  lift: 14, shade: 0.65 },
-  ];
-  const BASE_W = 245;
-  const BASE_H = 282;
-
-  const slotAt = (depth) => {
-    const i = Math.min(Math.floor(depth), SLOTS.length - 2);
-    const t = Math.min(1, depth - i);
-    const a = SLOTS[i];
-    const b = SLOTS[i + 1];
-    const mix = (key) => a[key] + (b[key] - a[key]) * t;
-    return { x: mix("x"), rot: mix("rot"), scale: mix("scale"), lift: mix("lift"), shade: mix("shade") };
-  };
-
-  // Posição contínua: o número inteiro mais próximo é o card central
-  let pos = Math.max(0, cards.findIndex((card) => card.hasAttribute("data-arc-start")));
-
-  const wrapOffset = (index, at) => {
-    let k = (index - at) % count;
-    if (k >= half) k -= count;
-    if (k < -half) k += count;
-    return k;
-  };
-
-  const metrics = () => {
-    const vw = window.innerWidth;
-    if (vw >= 1300) return { size: 1, spread: 1, visible: 3 };
-    if (vw >= 900) return { size: (vw - 60) / 1240, spread: 1, visible: 3 };
-    if (vw >= 640) return { size: 0.76, spread: 1, visible: 2 };
-    return { size: Math.min(0.86, (vw - 40) / 300), spread: Math.min(1, (vw - 40) / 420), visible: 2 };
-  };
-
-  let m = metrics();
-
-  const layout = () => {
-    arc.style.setProperty("--card-w", `${BASE_W * m.size}px`);
-    arc.style.setProperty("--card-h", `${BASE_H * m.size}px`);
-    const centerIndex = ((Math.round(pos) % count) + count) % count;
-
-    cards.forEach((card, index) => {
-      const k = wrapOffset(index, pos);
-      const depth = Math.abs(k);
-      const dir = Math.sign(k);
-      const slot = slotAt(depth);
-
-      // Card que dá a volta de um lado para o outro não deve atravessar a tela
-      if (card._k !== undefined && Math.abs(k - card._k) > half) {
-        card.classList.add("no-anim");
-        requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove("no-anim")));
-      }
-      card._k = k;
-
-      card.style.transform =
-        `translateX(${dir * slot.x * m.size * m.spread}px) ` +
-        `translateY(${-slot.lift * m.size}px) ` +
-        `perspective(${2400 * m.size}px) rotateY(${dir * slot.rot}deg) ` +
-        `scale(${slot.scale})`;
-      card.style.opacity = String(Math.max(0, Math.min(1, (m.visible + 0.5 - depth) / 0.5)));
-      card.style.zIndex = String(Math.round(100 - depth * 10));
-      card.style.pointerEvents = depth > m.visible + 0.25 ? "none" : "";
-      card.style.setProperty("--depth", Math.round(depth));
-      card.style.setProperty("--shade", slot.shade);
-      card.style.setProperty("--shade-dir", dir < 0 ? "90deg" : "270deg");
-      card.classList.toggle("is-center", index === centerIndex);
-      card.setAttribute("aria-hidden", String(depth > m.visible));
-    });
-  };
-
-  // Pausa o giro automático por um instante para a transição até o card escolhido
-  let settleUntil = 0;
-  const goTo = (target) => {
-    settleUntil = performance.now() + 900;
-    arc.classList.remove("is-spinning");
-    pos = target;
-    layout();
-  };
-
-  cards.forEach((card, index) => {
-    // Cada card flutua em uma fase diferente (a sombra usa o mesmo atraso)
-    card.style.setProperty("--float-delay", `${index * -0.75}s`);
-    card.addEventListener("mouseenter", () => { hovering = true; });
-    card.addEventListener("mouseleave", () => { hovering = false; });
-    card.addEventListener("click", () => {
-      if (dragMoved) return;
-      const k = wrapOffset(index, Math.round(pos));
-      if (k !== 0) goTo(Math.round(pos) + k);
-    });
-  });
-
-  arc.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); goTo(Math.round(pos) + 1); }
-    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(Math.round(pos) - 1); }
-  });
-
-  // Arrastar com o cursor (ou o dedo): os cards acompanham o movimento
-  let dragStartX = null;
-  let dragStartPos = 0;
-  let dragMoved = false;
-  let lastX = 0;
-  let lastT = 0;
-  let velocity = 0;
-
-  const stepPx = () => SLOTS[1].x * m.size * m.spread;
-
-  arc.addEventListener("pointerdown", (e) => {
-    if (e.button !== 0) return;
-    dragStartX = lastX = e.clientX;
-    lastT = performance.now();
-    dragStartPos = pos;
-    dragMoved = false;
-    velocity = 0;
-  });
-
-  arc.addEventListener("pointermove", (e) => {
-    if (dragStartX === null) return;
-    const dx = e.clientX - dragStartX;
-    if (!dragMoved && Math.abs(dx) < 6) return;
-    if (!dragMoved) {
-      dragMoved = true;
-      arc.classList.add("is-dragging");
-      arc.setPointerCapture(e.pointerId);
-    }
-    const now = performance.now();
-    velocity = (e.clientX - lastX) / Math.max(1, now - lastT);
-    lastX = e.clientX;
-    lastT = now;
-    pos = dragStartPos - dx / stepPx();
-    layout();
-  });
-
-  const endDrag = () => {
-    if (dragStartX === null) return;
-    dragStartX = null;
-    if (!dragMoved) return;
-    arc.classList.remove("is-dragging");
-    // Um gesto rápido avança mais um card na direção do movimento
-    const fling = Math.abs(velocity) > 0.5 ? -Math.sign(velocity) * 0.5 : 0;
-    goTo(Math.round(pos + fling));
-    setTimeout(() => { dragMoved = false; }, 0);
-  };
-
-  arc.addEventListener("pointerup", endDrag);
-  arc.addEventListener("pointercancel", endDrag);
-
-  /* Giro contínuo: os cards só param quando o cursor está sobre um deles */
-  const SPIN_SPEED = 0.28; // cards por segundo
-  let hovering = false;
-  let arcInView = true;
-  let lastFrame = performance.now();
-
-  if (hasIO) {
-    new IntersectionObserver(([entry]) => { arcInView = entry.isIntersecting; }).observe(arc);
-  }
-
-  const spin = (now) => {
-    const dt = Math.min(0.1, (now - lastFrame) / 1000);
-    lastFrame = now;
-    const canSpin = !reduceMotion.matches && !hovering && !dragMoved &&
-      dragStartX === null && arcInView && !document.hidden && now > settleUntil;
-    arc.classList.toggle("is-spinning", canSpin);
-    if (canSpin) {
-      pos += SPIN_SPEED * dt;
-      layout();
-    }
-    requestAnimationFrame(spin);
-  };
-  requestAnimationFrame(spin);
-
-  let resizeFrame;
-  window.addEventListener("resize", () => {
-    cancelAnimationFrame(resizeFrame);
-    resizeFrame = requestAnimationFrame(() => { m = metrics(); layout(); });
-  });
-
-  layout();
 })();

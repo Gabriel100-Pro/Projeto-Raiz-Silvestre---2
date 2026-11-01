@@ -33,6 +33,11 @@
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3.6 20.4l1.2-4.1a8.6 8.6 0 1 1 3.2 3.1z"/><path d="M9.1 8.1c.2-.4.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.6l-.5.6c-.1.1-.1.3 0 .5.6 1.1 1.5 2 2.6 2.6.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.2.1.4.3.4.5v.5c0 .3-.2.6-.5.8-.6.4-1.4.6-2.1.4-2.8-.7-5-2.9-5.8-5.7-.2-.7 0-1.5.4-2.1z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11.2L12 4l8.5 7.2"/><path d="M5.8 9.6V20h12.4V9.6"/><path d="M10 20v-5.2h4V20"/></symbol>
+    <symbol id="i-shovel" viewBox="0 0 24 24"><path d="M14.6 9.4l5.2-5.2"/><path d="M18.2 2.6l3.2 3.2"/><path d="M13.2 6.8l4 4-3.6 3.6c-1.8 1.8-4.6 2.1-6.6 1L4.6 17.8a1.4 1.4 0 0 1-2-2L5 13.4c-1.1-2-.8-4.8 1-6.6z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20c0-3.6 2.8-6.2 6.2-6.2s6.2 2.6 6.2 6.2"/><path d="M15.4 4.9a3.2 3.2 0 0 1 0 6.2"/><path d="M17.4 14.2c2.2.7 3.8 2.9 3.8 5.8"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.6" cy="9.6" r="1.7"/><path d="M3.5 17.4l5-4.6 3.6 3.2 3.4-3 5 4.4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.4 4.2-1.9 1.3a11.4 11.4 0 0 0 6.3 6.3l1.3-1.9 4.2 1.4v2.6a2 2 0 0 1-2.2 2C10.6 18.8 5.2 13.4 4.6 5.7a2 2 0 0 1 2-2.2z"/></symbol>
   </svg>
 
   <div class="page">
@@ -49,12 +54,20 @@
           </span>
         </a>
 
+        <!-- No mobile vira um painel central que desce como uma cortina, com vídeo ao fundo -->
         <nav class="nav" id="menu" aria-label="Navegação principal">
-          <a class="nav__link is-active" href="#inicio" aria-current="page">Início</a>
-          <a class="nav__link" href="#servicos">Serviços</a>
-          <a class="nav__link" href="#sobre">Sobre</a>
-          <a class="nav__link" href="#galeria">Galeria</a>
-          <a class="nav__link" href="#contato">Contato</a>
+          <div class="nav__panel">
+            <video class="nav__video" data-nav-video muted loop playsinline preload="none" aria-hidden="true">
+              <source src="assets/video/plantas-balancando.mp4" type="video/mp4">
+            </video>
+            <div class="nav__links">
+              <a class="nav__link is-active" href="#inicio" aria-current="page"><span class="nav__icon" aria-hidden="true"><svg class="icon"><use href="#i-home"/></svg></span>Início</a>
+              <a class="nav__link" href="#servicos"><span class="nav__icon" aria-hidden="true"><svg class="icon"><use href="#i-shovel"/></svg></span>Serviços</a>
+              <a class="nav__link" href="#sobre"><span class="nav__icon" aria-hidden="true"><svg class="icon"><use href="#i-users"/></svg></span>Sobre</a>
+              <a class="nav__link" href="#galeria"><span class="nav__icon" aria-hidden="true"><svg class="icon"><use href="#i-image"/></svg></span>Galeria</a>
+              <a class="nav__link" href="#contato"><span class="nav__icon" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span>Contato</a>
+            </div>
+          </div>
         </nav>
 
         <a class="btn-quote" href="https://wa.me/5511942842007?text=Ol%C3%A1%2C%20Raiz%20Silvestre%21%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20o%20meu%20jardim." target="_blank" rel="noopener">
@@ -77,72 +90,20 @@
         </div>
         <div class="container hero__content">
           <p class="eyebrow reveal">Transforme seu espaço</p>
-          <h1 class="display reveal" style="--d: 80ms">
-            <span class="display__line">Com a natureza</span>
-            <span class="display__line display__line--accent">ao seu lado.</span>
+          <!-- Cada linha do título aparece uma por vez -->
+          <h1 class="display">
+            <span class="display__line reveal" style="--d: 200ms">Com a natureza</span>
+            <span class="display__line display__line--accent reveal" style="--d: 650ms">ao seu lado,</span>
+            <span class="display__line reveal" style="--d: 1100ms">todos os dias.</span>
           </h1>
-          <p class="hero__lead reveal" style="--d: 160ms">
+          <p class="hero__lead reveal" style="--d: 1550ms">
             Jardinagem com qualidade, cuidado e experiência para
             deixar seu ambiente mais bonito, saudável e acolhedor.
           </p>
-          <div class="hero__actions reveal" style="--d: 240ms">
+          <div class="hero__actions reveal" style="--d: 1750ms">
             <a class="btn-primary" href="https://wa.me/5511942842007?text=Ol%C3%A1%21%20Quero%20contratar%20agora%20os%20servi%C3%A7os%20de%20jardinagem%20da%20Raiz%20Silvestre.%20Podemos%20conversar%3F" target="_blank" rel="noopener">Contratar agora</a>
             <a class="link-underline" href="#planos">Ver planos</a>
           </div>
-        </div>
-
-        <div class="arc" data-arc tabindex="0" aria-roledescription="carrossel" aria-label="Serviços em destaque — arraste ou use as setas para navegar">
-          <ul class="arc__track">
-            <li class="arc-card" data-arc-card>
-              <div class="arc-card__shadow" aria-hidden="true"></div>
-              <div class="arc-card__float"><div class="arc-card__inner">
-                <img src="assets/img/hero-plantio.jpg" alt="Mãos plantando mudas na terra" draggable="false">
-                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-sprout"/></svg><span>Plantio<br>e paisagismo</span></div>
-              </div></div>
-            </li>
-            <li class="arc-card" data-arc-card>
-              <div class="arc-card__shadow" aria-hidden="true"></div>
-              <div class="arc-card__float"><div class="arc-card__inner">
-                <img src="assets/img/hero-instalacao.jpg" alt="Caminho de jardim iluminado à noite" draggable="false">
-                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-seedling"/></svg><span>Instalação<br>de jardins</span></div>
-              </div></div>
-            </li>
-            <li class="arc-card" data-arc-card>
-              <div class="arc-card__shadow" aria-hidden="true"></div>
-              <div class="arc-card__float"><div class="arc-card__inner">
-                <img src="assets/img/hero-irrigacao.jpg" alt="Aspersor irrigando o gramado" draggable="false">
-                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg><span>Sistema de<br>irrigação</span></div>
-              </div></div>
-            </li>
-            <li class="arc-card" data-arc-card data-arc-start>
-              <div class="arc-card__shadow" aria-hidden="true"></div>
-              <div class="arc-card__float"><div class="arc-card__inner">
-                <img src="assets/img/hero-gramados.jpg" alt="Cortador de grama sobre um gramado verde" draggable="false">
-                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-grass"/></svg><span>Manutenção<br>de gramados</span></div>
-              </div></div>
-            </li>
-            <li class="arc-card" data-arc-card>
-              <div class="arc-card__shadow" aria-hidden="true"></div>
-              <div class="arc-card__float"><div class="arc-card__inner">
-                <img src="assets/img/hero-poda.jpg" alt="Poda de arbusto com tesoura de cerca viva" draggable="false">
-                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-prune"/></svg><span>Poda e<br>paisagismo</span></div>
-              </div></div>
-            </li>
-            <li class="arc-card" data-arc-card>
-              <div class="arc-card__shadow" aria-hidden="true"></div>
-              <div class="arc-card__float"><div class="arc-card__inner">
-                <img src="assets/img/hero-plantas.jpg" alt="Ave-do-paraíso florida entre folhagens" draggable="false">
-                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-pot"/></svg><span>Plantas e<br>decoração verde</span></div>
-              </div></div>
-            </li>
-            <li class="arc-card" data-arc-card>
-              <div class="arc-card__shadow" aria-hidden="true"></div>
-              <div class="arc-card__float"><div class="arc-card__inner">
-                <img src="assets/img/hero-personalizados.jpg" alt="Jardim residencial moderno com gramado e canteiros" draggable="false">
-                <div class="arc-card__label"><svg class="icon" aria-hidden="true"><use href="#i-plan"/></svg><span>Jardins<br>personalizados</span></div>
-              </div></div>
-            </li>
-          </ul>
         </div>
       </section>
 
@@ -160,11 +121,11 @@
         <div class="container">
           <ul class="stats__grid">
             <li class="stat reveal" style="--d: 0ms">
-              <p class="stat__value"><span data-count="850" data-prefix="+">0</span></p>
+              <p class="stat__value"><span data-count="150" data-prefix="+">0</span></p>
               <p class="stat__label">Jardins criados</p>
             </li>
             <li class="stat stat--alt reveal" style="--d: 120ms">
-              <p class="stat__value"><span data-count="15">0</span></p>
+              <p class="stat__value"><span data-count="30">0</span></p>
               <p class="stat__label">Anos de experiência</p>
             </li>
             <li class="stat reveal" style="--d: 240ms">
@@ -431,7 +392,7 @@
             <ul class="footer__contact">
               <li><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg><a href="https://wa.me/5511942842007?text=Ol%C3%A1%2C%20Raiz%20Silvestre%21%20Gostaria%20de%20tirar%20algumas%20d%C3%BAvidas%20sobre%20os%20servi%C3%A7os%20de%20jardinagem." target="_blank" rel="noopener">(11) 94284-2007</a></li>
               <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:contato@raizsilvestre.com.br">contato@raizsilvestre.com.br</a></li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Sua cidade · UF</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Jundiaí e região</span></li>
               <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Seg. a sáb., das 7h às 18h</span></li>
             </ul>
             <div class="footer__social">
