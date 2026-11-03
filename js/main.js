@@ -36,6 +36,14 @@
     }
   }
 
+  /* ---------- Header: ganha fundo ao rolar (fixo no mobile) ---------- */
+  const header = document.querySelector(".header");
+  if (header) {
+    const updateHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 10);
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+  }
+
   /* ---------- Menu mobile ---------- */
   const toggle = document.querySelector(".menu-toggle");
   const nav = document.getElementById("menu");

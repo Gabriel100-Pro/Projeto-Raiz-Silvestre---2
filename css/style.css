@@ -1209,6 +1209,19 @@ button { font: inherit; color: inherit; }
 }
 
 @media (max-width: 900px) {
+  /* No mobile o header fica fixo e acompanha a rolagem.
+     Obs.: sem backdrop-filter/transform aqui, senão o .nav (position: fixed) deixa de cobrir a tela. */
+  html { scroll-padding-top: 76px; }
+  .header {
+    position: fixed;
+    padding-bottom: 8px;
+    background: transparent;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .header.is-scrolled {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 6px 20px rgba(8, 22, 7, 0.08);
+  }
   .header__inner { grid-template-columns: 1fr auto auto; gap: 10px; }
 
   /* Menu hambúrguer com 3 linhas; vira um "X" quando aberto */
